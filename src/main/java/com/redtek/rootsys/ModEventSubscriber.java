@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.core.config.plugins.util.ResolverUtil;
 
@@ -24,6 +25,8 @@ public class ModEventSubscriber {
         };
 
         event.getRegistry().registerAll(blocks);
+
+        RootSystem.LOGGER.debug("All registered blocks: " + ForgeRegistries.BLOCKS.getEntries());
     }
 
     @SubscribeEvent
@@ -38,6 +41,8 @@ public class ModEventSubscriber {
 
         event.getRegistry().registerAll(items);
         event.getRegistry().registerAll(itemblocks);
+
+        RootSystem.LOGGER.debug("All registered items: " + ForgeRegistries.ITEMS.getEntries());
     }
 
     public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
