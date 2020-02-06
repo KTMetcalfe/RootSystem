@@ -1,5 +1,6 @@
 package com.redtek.rootsys.items;
 
+import com.redtek.rootsys.ItemEvents;
 import com.redtek.rootsys.RootSystem;
 import com.redtek.rootsys.init.ModItemGroups;
 import com.redtek.rootsys.init.Tiers;
@@ -26,54 +27,7 @@ public class TestPickaxe extends PickaxeItem{
 
   public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-    BlockPos posTemp = pos;
-
-    Direction up = Direction.UP;
-    Direction down = Direction.DOWN;
-
-    Direction right = entityLiving.getHorizontalFacing().rotateY();
-    Direction left = right.getOpposite();
-
-    if (entityLiving.rotationPitch > 45 || entityLiving.rotationPitch < -45) {
-      up = entityLiving.getHorizontalFacing();
-      down = up.getOpposite();
-    }
-
-    for (int i = 0; i<8; i++) {
-
-      switch (i) {
-        case 0:
-          posTemp = pos.offset(up);
-          break;
-        case 1:
-          posTemp = pos.offset(up);
-          posTemp = posTemp.offset(right);
-          break;
-        case 2:
-          posTemp = pos.offset(right);
-          break;
-        case 3:
-          posTemp = pos.offset(right);
-          posTemp = posTemp.offset(down);
-          break;
-        case 4:
-          posTemp = pos.offset(down);
-          break;
-        case 5:
-          posTemp = pos.offset(down);
-          posTemp = posTemp.offset(left);
-          break;
-        case 6:
-          posTemp = pos.offset(left);
-          break;
-        case 7:
-          posTemp = pos.offset(left);
-          posTemp = posTemp.offset(up);
-          break;
-      }
-
-      worldIn.destroyBlock(posTemp, this.canHarvestBlock(worldIn.getBlockState(posTemp)));
-    }
+    ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
 
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
   }
