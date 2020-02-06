@@ -17,7 +17,7 @@ public enum Tiers implements IItemTier {
   TEST(3, 1561, 10.0F, 3.0F, 15, () -> {
     return Ingredient.fromItems(ModBlocks.TEST_ORE);
   }),
-  POO(1, 250, 3.0F, 1.0F, 25, () -> {
+  POO(1, 250, 2.0F, .5F, 25, () -> {
     return Ingredient.fromItems(Blocks.DIRT);
   });
 
