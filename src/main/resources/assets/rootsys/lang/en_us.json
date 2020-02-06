@@ -1,6 +1,8 @@
 {
-  "item.rootsys.test_item": "Test Item",
   "itemGroup.rootsys": "Root System",
+
+  "item.rootsys.test_pickaxe": "Test Pickaxe",
+  "item.rootsys.test_axe": "Test Axe",
 
   "block.rootsys.test_ore": "Test ore"
 }

@@ -7,5 +7,6 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(RootSystem.MODID)
 public class ModBlocks {
-    public static final Block TEST_ORE = new TestOre().setRegistryName(RootSystem.MODID,"test_ore");
+
+  public static final Block TEST_ORE = new TestOre().setRegistryName(RootSystem.MODID,"test_ore");
 }
