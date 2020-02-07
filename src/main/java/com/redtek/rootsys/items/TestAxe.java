@@ -31,7 +31,8 @@ public class TestAxe extends AxeItem {
         || worldIn.getBlockState(pos).getBlock() == Blocks.JUNGLE_LOG
         || worldIn.getBlockState(pos).getBlock() == Blocks.OAK_LOG
         || worldIn.getBlockState(pos).getBlock() == Blocks.SPRUCE_LOG) {
-      ItemEvents.veinMine(stack, worldIn, state, pos, entityLiving);
+      ItemEvents.veinMine(stack, worldIn, state, pos, entityLiving, 16);
+      ItemEvents.blocksDestroyed = 0;
     }
 
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);

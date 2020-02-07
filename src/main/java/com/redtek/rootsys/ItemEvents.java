@@ -13,9 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Consumer;
 
 public class ItemEvents {
 
@@ -67,49 +71,71 @@ public class ItemEvents {
           break;
       }
 
-      if (stack.canHarvestBlock(worldIn.getBlockState(posTemp))) {
+      if (stack.canHarvestBlock(worldIn.getBlockState(pos)) && stack.canHarvestBlock(worldIn.getBlockState(posTemp)) && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
         worldIn.destroyBlock(posTemp, true);
-        //Damage Item
+        stack.damageItem(1, entityLiving, entity -> {
+          entityLiving.sendBreakAnimation(entity.getActiveHand());
+        }
+        );
       }
     }
   }
 
-  public static void veinMine(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-    BlockPos posTemp = pos;
+  public static int blocksDestroyed = 0;
 
-    for (int i = 0; i<6; i++) {
+  public static void veinMine(ItemStack stackIn, World worldIn, BlockState stateIn, BlockPos posIn, LivingEntity entityLivingIn, int maxBlocksIn) {
 
-      switch (i) {
-        case 0:
-          posTemp = pos.up();
-          break;
-        case 1:
-          posTemp = pos.down();
-          break;
-        case 2:
-          posTemp = pos.north();
-          break;
-        case 3:
-          posTemp = pos.south();
-          break;
-        case 4:
-          posTemp = pos.east();
-          break;
-        case 5:
-          posTemp = pos.west();
-          break;
+    BlockPos posTemp = posIn;
+
+    List<BlockPos> posList = new ArrayList<>();
+
+    for (int i = 0; i < 6; i++) {
+
+      if (blocksDestroyed < maxBlocksIn) {
+
+        switch (i) {
+          case 0:
+            posTemp = posIn.up();
+            break;
+          case 1:
+            posTemp = posIn.down();
+            break;
+          case 2:
+            posTemp = posIn.north();
+            break;
+          case 3:
+            posTemp = posIn.south();
+            break;
+          case 4:
+            posTemp = posIn.east();
+            break;
+          case 5:
+            posTemp = posIn.west();
+            break;
+        }
+
+        if (worldIn.getBlockState(posTemp).getBlock() == Blocks.ACACIA_LOG
+            || worldIn.getBlockState(posTemp).getBlock() == Blocks.BIRCH_LOG
+            || worldIn.getBlockState(posTemp).getBlock() == Blocks.DARK_OAK_LOG
+            || worldIn.getBlockState(posTemp).getBlock() == Blocks.JUNGLE_LOG
+            || worldIn.getBlockState(posTemp).getBlock() == Blocks.OAK_LOG
+            || worldIn.getBlockState(posTemp).getBlock() == Blocks.SPRUCE_LOG) {
+
+          worldIn.destroyBlock(posTemp, true);
+
+          stackIn.damageItem(1, entityLivingIn, entity -> {
+                entityLivingIn.sendBreakAnimation(entity.getActiveHand());
+              });
+
+          blocksDestroyed++;
+
+          posList.add(posTemp);
+        }
       }
+    }
 
-      if (worldIn.getBlockState(posTemp).getBlock() == Blocks.ACACIA_LOG
-              || worldIn.getBlockState(posTemp).getBlock() == Blocks.BIRCH_LOG
-              || worldIn.getBlockState(posTemp).getBlock() == Blocks.DARK_OAK_LOG
-              || worldIn.getBlockState(posTemp).getBlock() == Blocks.JUNGLE_LOG
-              || worldIn.getBlockState(posTemp).getBlock() == Blocks.OAK_LOG
-              || worldIn.getBlockState(posTemp).getBlock() == Blocks.SPRUCE_LOG) {
-        worldIn.destroyBlock(posTemp, true);
-        veinMine(stack, worldIn, state, posTemp, entityLiving);
-        //Damage Item
-      }
+    for (BlockPos breakPos:posList) {
+      veinMine(stackIn, worldIn, stateIn, breakPos, entityLivingIn, maxBlocksIn);
     }
   }
 }
