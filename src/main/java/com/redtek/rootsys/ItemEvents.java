@@ -14,7 +14,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemEvents {
+
   public static void hammerMode(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
     BlockPos posTemp = pos;
@@ -65,8 +69,46 @@ public class ItemEvents {
 
       if (stack.canHarvestBlock(worldIn.getBlockState(posTemp))) {
         worldIn.destroyBlock(posTemp, true);
-      } else if (worldIn.getBlockState(pos).getBlock() == Blocks.OAK_LOG && worldIn.getBlockState(posTemp).getBlock() == Blocks.OAK_LOG && entityLiving.getHeldItemMainhand().getItem() == ModItems.TEST_AXE) {
+        //Damage Item
+      }
+    }
+  }
+
+  public static void veinMine(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+    BlockPos posTemp = pos;
+
+    for (int i = 0; i<6; i++) {
+
+      switch (i) {
+        case 0:
+          posTemp = pos.up();
+          break;
+        case 1:
+          posTemp = pos.down();
+          break;
+        case 2:
+          posTemp = pos.north();
+          break;
+        case 3:
+          posTemp = pos.south();
+          break;
+        case 4:
+          posTemp = pos.east();
+          break;
+        case 5:
+          posTemp = pos.west();
+          break;
+      }
+
+      if (worldIn.getBlockState(posTemp).getBlock() == Blocks.ACACIA_LOG
+              || worldIn.getBlockState(posTemp).getBlock() == Blocks.BIRCH_LOG
+              || worldIn.getBlockState(posTemp).getBlock() == Blocks.DARK_OAK_LOG
+              || worldIn.getBlockState(posTemp).getBlock() == Blocks.JUNGLE_LOG
+              || worldIn.getBlockState(posTemp).getBlock() == Blocks.OAK_LOG
+              || worldIn.getBlockState(posTemp).getBlock() == Blocks.SPRUCE_LOG) {
         worldIn.destroyBlock(posTemp, true);
+        veinMine(stack, worldIn, state, posTemp, entityLiving);
+        //Damage Item
       }
     }
   }
