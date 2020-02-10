@@ -4,7 +4,6 @@ import com.redtek.rootsys.RootSystem;
 import com.redtek.rootsys.items.TestAxe;
 import com.redtek.rootsys.items.TestPickaxe;
 import net.minecraft.item.Item;
-import net.minecraft.item.PickaxeItem;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(RootSystem.MODID)

@@ -1,6 +1,5 @@
 package com.redtek.rootsys;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
@@ -66,10 +65,11 @@ public class ItemEvents {
       if (stackIn.canHarvestBlock(worldIn.getBlockState(posIn)) && stackIn.canHarvestBlock(worldIn.getBlockState(posTemp)) && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
 //        worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
         worldIn.destroyBlock(posTemp, true);
-        stackIn.damageItem(1, entityLivingIn, entity -> {
-          entityLivingIn.sendBreakAnimation(entity.getActiveHand());
-        }
-        );
+//        stackIn.damageItem(1, entityLivingIn, entity -> {
+//          entityLivingIn.sendBreakAnimation(entity.getActiveHand());
+//        }
+//        );
+        stackIn.setDamage(stackIn.getDamage()+1);
       }
     }
   }
@@ -197,14 +197,14 @@ public class ItemEvents {
 
         if (worldIn.getBlockState(posTemp).getBlock() == stateIn.getBlock()) {
 
-//          worldIn.getPlayerByUuid(entityLivingIn.getUniqueID()).inventory.addItemStackToInventory(new ItemStack(worldIn.getBlockState(posTemp).getBlock()));
           worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
 
           worldIn.destroyBlock(posTemp, false);
 
-          stackIn.damageItem(1, entityLivingIn, entity -> {
-                entityLivingIn.sendBreakAnimation(entity.getActiveHand());
-              });
+//          stackIn.damageItem(1, entityLivingIn, entity -> {
+//                entityLivingIn.sendBreakAnimation(entity.getActiveHand());
+//              });
+          stackIn.setDamage(stackIn.getDamage()+1);
 
           blocksDestroyed++;
 
