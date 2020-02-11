@@ -33,13 +33,11 @@ public class TestAxe extends AxeItem {
 
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    if (stack.hasTag()) {
-      nbtTag = stack.getTag();
-    } else {
-      stack.setTag(nbtTag);
+    if (!stack.hasTag()) {
+      setNbtTag(nbtTag);
     }
 
-    tooltip.add(new TranslationTextComponent("Mode: " + Objects.requireNonNull(stack.getTag()).getString("Mode")));
+    tooltip.add(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")));
 
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
@@ -49,17 +47,13 @@ public class TestAxe extends AxeItem {
 
     if (!worldIn.isRemote) return null;
 
-    ItemStack activeItem = playerIn.getHeldItem(handIn);
-
-    if (Objects.requireNonNull(activeItem.getTag()).getString("Mode").equals("Vein")) {
-      activeItem.getTag().putString("Mode", "Normal");
+    if (getNbtTag().getString("Mode").equals("Vein")) {
+      getNbtTag().putString("Mode", "Normal");
     } else {
-      activeItem.getTag().putString("Mode", "Vein");
+      getNbtTag().putString("Mode", "Vein");
     }
 
-    nbtTag = activeItem.getTag();
-
-    playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + activeItem.getTag().getString("Mode")), true);
+    playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")), true);
 
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
@@ -67,14 +61,20 @@ public class TestAxe extends AxeItem {
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-    stack.setTag(nbtTag);
-
-    if (Objects.requireNonNull(stack.getTag()).getString("Mode").equals("Vein") && Objects.requireNonNull(worldIn.getBlockState(pos).getBlock().getRegistryName()).toString().contains("log")) {
+    if (getNbtTag().getString("Mode").equals("Vein") && worldIn.getBlockState(pos).getBlock().getRegistryName().toString().contains("log")) {
       stack.setDamage(stack.getDamage() - 1);
       ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
       ItemEvents.blocksDestroyed = 0;
     }
 
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+  }
+
+  public void setNbtTag(CompoundNBT nbtTag) {
+    this.nbtTag = nbtTag;
+  }
+
+  public CompoundNBT getNbtTag() {
+    return nbtTag;
   }
 }

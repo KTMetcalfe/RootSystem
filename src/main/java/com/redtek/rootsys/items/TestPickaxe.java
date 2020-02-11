@@ -33,13 +33,7 @@ public class TestPickaxe extends PickaxeItem{
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 
-    if (stack.hasTag()) {
-      nbtTag = stack.getTag();
-    } else {
-      stack.setTag(nbtTag);
-    }
-
-    tooltip.add(new TranslationTextComponent("Mode: " + stack.getTag().getString("Mode")));
+    tooltip.add(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")));
 
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
@@ -49,23 +43,19 @@ public class TestPickaxe extends PickaxeItem{
 
     if (!worldIn.isRemote) return null;
 
-    ItemStack activeItem = playerIn.getHeldItem(handIn);
-
-    switch (activeItem.getTag().getString("Mode")) {
+    switch (getNbtTag().getString("Mode")) {
       default:
-        activeItem.getTag().putString("Mode", "Hammer");
+        getNbtTag().putString("Mode", "Hammer");
         break;
       case "Hammer":
-        activeItem.getTag().putString("Mode", "Vein");
+        getNbtTag().putString("Mode", "Vein");
         break;
       case "Vein":
-        activeItem.getTag().putString("Mode", "Normal");
+        getNbtTag().putString("Mode", "Normal");
         break;
     }
 
-    nbtTag = activeItem.getTag();
-
-    playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + activeItem.getTag().getString("Mode")), true);
+    playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")), true);
 
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
@@ -73,11 +63,10 @@ public class TestPickaxe extends PickaxeItem{
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-    stack.setTag(nbtTag);
-
-    switch (stack.getTag().getString("Mode")) {
+    switch (getNbtTag().getString("Mode")) {
       case "Hammer":
         ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
+        worldIn.destroyBlock(pos.down(), true);
         break;
       case "Vein":
         if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
@@ -89,5 +78,13 @@ public class TestPickaxe extends PickaxeItem{
     }
 
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+  }
+
+  public void setNbtTag(CompoundNBT nbtTag) {
+    this.nbtTag = nbtTag;
+  }
+
+  public CompoundNBT getNbtTag() {
+    return nbtTag;
   }
 }
