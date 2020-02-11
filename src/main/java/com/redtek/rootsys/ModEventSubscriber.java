@@ -1,5 +1,9 @@
 package com.redtek.rootsys;
 
+import com.redtek.rootsys.capabilities.Factory;
+import com.redtek.rootsys.capabilities.mode.IMode;
+import com.redtek.rootsys.capabilities.mode.ToolMode;
+import com.redtek.rootsys.capabilities.mode.ModeStorage;
 import com.redtek.rootsys.init.ModBlocks;
 import com.redtek.rootsys.init.ModItemGroups;
 import com.redtek.rootsys.init.ModItems;
@@ -7,10 +11,10 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -27,10 +31,13 @@ public class ModEventSubscriber {
     event.getRegistry().registerAll(blocks);
 
     RootSystem.LOGGER.debug("All registered blocks: " + ForgeRegistries.BLOCKS.getEntries());
+
   }
 
   @SubscribeEvent
   public static void onRegisterItems(RegistryEvent.Register<Item> event) {
+
+    CapabilityManager.INSTANCE.register(IMode.class, new ModeStorage(), new Factory());
 
     final Item[] items = {
         ModItems.TEST_PICKAXE,
