@@ -198,9 +198,8 @@ public class ItemEvents {
 
         if (worldIn.getBlockState(posTemp).getBlock() == stateIn.getBlock()) {
 
-          worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
-
-          worldIn.destroyBlock(posTemp, false);
+//          worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
+          worldIn.destroyBlock(posTemp, true);
 
 //          stackIn.damageItem(1, entityLivingIn, entity -> {
 //                entityLivingIn.sendBreakAnimation(entity.getActiveHand());

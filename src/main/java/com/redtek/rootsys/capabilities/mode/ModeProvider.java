@@ -20,6 +20,8 @@ public class ModeProvider implements ICapabilitySerializable<INBT> {
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+
+    return null;
   }
 
   @Override

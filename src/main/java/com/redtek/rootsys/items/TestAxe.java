@@ -23,8 +23,6 @@ import java.util.Objects;
 
 public class TestAxe extends AxeItem {
 
-  CompoundNBT nbtTag = new CompoundNBT();
-
   public TestAxe() {
     super(Tiers.TEST, (int) Tiers.TEST.getAttackDamage(), 0, new Properties().group(ModItemGroups.MOD_ITEM_GROUP)
         .maxStackSize(1)
@@ -33,11 +31,10 @@ public class TestAxe extends AxeItem {
 
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    if (!stack.hasTag()) {
-      setNbtTag(nbtTag);
-    }
 
-    tooltip.add(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")));
+    CompoundNBT nbt = stack.getTag();
+
+    tooltip.add(new TranslationTextComponent("Mode: " + nbt.getString("Mode")));
 
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
@@ -45,15 +42,21 @@ public class TestAxe extends AxeItem {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 
-    if (!worldIn.isRemote) return null;
+    if (!worldIn.isRemote) {
 
-    if (getNbtTag().getString("Mode").equals("Vein")) {
-      getNbtTag().putString("Mode", "Normal");
-    } else {
-      getNbtTag().putString("Mode", "Vein");
+      ItemStack stack = playerIn.getHeldItem(handIn);
+      CompoundNBT nbt = stack.getTag();
+
+      if (nbt.getString("Mode").equals("Vein")) {
+        nbt.putString("Mode", "Normal");
+      } else {
+        nbt.putString("Mode", "Vein");
+      }
+
+      playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + nbt.getString("Mode")), true);
+
+      stack.setTag(nbt);
     }
-
-    playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")), true);
 
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
@@ -61,20 +64,17 @@ public class TestAxe extends AxeItem {
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-    if (getNbtTag().getString("Mode").equals("Vein") && worldIn.getBlockState(pos).getBlock().getRegistryName().toString().contains("log")) {
-      stack.setDamage(stack.getDamage() - 1);
-      ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
-      ItemEvents.blocksDestroyed = 0;
+    if (!worldIn.isRemote) {
+
+      CompoundNBT nbt = stack.getTag();
+
+      if (nbt.getString("Mode").equals("Vein") && worldIn.getBlockState(pos).getBlock().getRegistryName().toString().contains("log")) {
+        stack.setDamage(stack.getDamage() - 1);
+        ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
+        ItemEvents.blocksDestroyed = 0;
+      }
     }
 
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
-  }
-
-  public void setNbtTag(CompoundNBT nbtTag) {
-    this.nbtTag = nbtTag;
-  }
-
-  public CompoundNBT getNbtTag() {
-    return nbtTag;
   }
 }

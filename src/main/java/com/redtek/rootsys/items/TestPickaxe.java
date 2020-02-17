@@ -22,8 +22,6 @@ import java.util.List;
 
 public class TestPickaxe extends PickaxeItem{
 
-  public CompoundNBT nbtTag = new CompoundNBT();
-
   public TestPickaxe() {
     super(Tiers.TEST, (int) Tiers.TEST.getAttackDamage(), 0, new Properties().group(ModItemGroups.MOD_ITEM_GROUP)
         .maxStackSize(1)
@@ -33,7 +31,9 @@ public class TestPickaxe extends PickaxeItem{
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 
-    tooltip.add(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")));
+    CompoundNBT nbt = stack.getTag();
+
+    tooltip.add(new TranslationTextComponent("Mode: " + nbt.getString("Mode")));
 
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
@@ -41,21 +41,27 @@ public class TestPickaxe extends PickaxeItem{
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 
-    if (!worldIn.isRemote) return null;
+    if (!worldIn.isRemote) {
 
-    switch (getNbtTag().getString("Mode")) {
-      default:
-        getNbtTag().putString("Mode", "Hammer");
-        break;
-      case "Hammer":
-        getNbtTag().putString("Mode", "Vein");
-        break;
-      case "Vein":
-        getNbtTag().putString("Mode", "Normal");
-        break;
+      ItemStack stack = playerIn.getHeldItem(handIn);
+      CompoundNBT nbt = stack.getTag();
+
+      switch (nbt.getString("Mode")) {
+        default:
+          nbt.putString("Mode", "Hammer");
+          break;
+        case "Hammer":
+          nbt.putString("Mode", "Vein");
+          break;
+        case "Vein":
+          nbt.putString("Mode", "Normal");
+          break;
+      }
+
+      playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + nbt.getString("Mode")), true);
+
+      stack.setTag(nbt);
     }
-
-    playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + getNbtTag().getString("Mode")), true);
 
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
@@ -63,28 +69,24 @@ public class TestPickaxe extends PickaxeItem{
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-    switch (getNbtTag().getString("Mode")) {
-      case "Hammer":
-        ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
-        worldIn.destroyBlock(pos.down(), true);
-        break;
-      case "Vein":
-        if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
-          stack.setDamage(stack.getDamage()-1);
-          ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
-          ItemEvents.blocksDestroyed = 0;
+    if (!worldIn.isRemote) {
+
+      CompoundNBT nbt = stack.getTag();
+
+      switch (nbt.getString("Mode")) {
+        case "Hammer":
+          ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
           break;
-        }
+        case "Vein":
+          if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
+            stack.setDamage(stack.getDamage() - 1);
+            ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
+            ItemEvents.blocksDestroyed = 0;
+            break;
+          }
+      }
     }
 
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
-  }
-
-  public void setNbtTag(CompoundNBT nbtTag) {
-    this.nbtTag = nbtTag;
-  }
-
-  public CompoundNBT getNbtTag() {
-    return nbtTag;
   }
 }
