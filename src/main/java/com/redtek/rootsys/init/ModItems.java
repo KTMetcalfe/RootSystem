@@ -1,8 +1,11 @@
 package com.redtek.rootsys.init;
 
 import com.redtek.rootsys.RootSystem;
-import com.redtek.rootsys.items.TestAxe;
-import com.redtek.rootsys.items.TestPickaxe;
+import com.redtek.rootsys.items.EnlightenedArmor;
+import com.redtek.rootsys.items.EnlightenedAxe;
+import com.redtek.rootsys.items.EnlightenedPickaxe;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -28,7 +31,12 @@ public class ModItems {
 
   */
 
-  public static final Item TEST_PICKAXE = new TestPickaxe().setRegistryName(RootSystem.MODID, "test_pickaxe");
+  public static final Item ENLIGHTENED_PICKAXE = new EnlightenedPickaxe().setRegistryName(RootSystem.MODID, "enlightened_pickaxe");
 
-  public static final Item TEST_AXE = new TestAxe().setRegistryName(RootSystem.MODID, "test_axe");
+  public static final Item ENLIGHTENED_AXE = new EnlightenedAxe().setRegistryName(RootSystem.MODID, "enlightened_axe");
+
+  public static final Item ENLIGHTENED_HELMET = new EnlightenedArmor(EquipmentSlotType.HEAD).setRegistryName(RootSystem.MODID, "enlightened_helmet");
+  public static final Item ENLIGHTENED_CHESTPLATE = new EnlightenedArmor(EquipmentSlotType.CHEST).setRegistryName(RootSystem.MODID, "enlightened_chestplate");
+  public static final Item ENLIGHTENED_LEGGINGS = new EnlightenedArmor(EquipmentSlotType.LEGS).setRegistryName(RootSystem.MODID, "enlightened_leggings");
+  public static final Item ENLIGHTENED_BOOTS = new EnlightenedArmor(EquipmentSlotType.FEET).setRegistryName(RootSystem.MODID, "enlightened_boots");
 }

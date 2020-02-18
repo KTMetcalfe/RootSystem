@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
-public class TestOre extends Block {
+public class EnlightenedOre extends Block {
 
-  public TestOre() {
+  public EnlightenedOre() {
     super(
         Properties.create(Material.IRON)
             .hardnessAndResistance(3.0F, 3.0F)

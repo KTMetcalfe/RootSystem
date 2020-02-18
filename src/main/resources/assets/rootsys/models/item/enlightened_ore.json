@@ -1,7 +1,7 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "textures": {
-        "test_ore": "rootsys:blocks/test_ore"
+        "test_ore": "rootsys:items/enlightened_ore"
     },
     "display": {
         "gui": {
@@ -41,12 +41,12 @@
             "from": [ 0, 0, 0 ], 
             "to": [ 16, 16, 16 ], 
             "faces": {
-                "north": { "texture": "#test_ore", "uv": [ 0, 0, 16, 16 ] },
-                "east": { "texture": "#test_ore", "uv": [ 0, 0, 16, 16 ] },
-                "south": { "texture": "#test_ore", "uv": [ 0, 0, 16, 16 ] },
-                "west": { "texture": "#test_ore", "uv": [ 0, 0, 16, 16 ] },
-                "up": { "texture": "#test_ore", "uv": [ 0, 0, 16, 16 ] },
-                "down": { "texture": "#test_ore", "uv": [ 0, 0, 16, 16 ] }
+                "north": { "texture": "#enlightened_ore", "uv": [ 0, 0, 16, 16 ] },
+                "east": { "texture": "#enlightened_ore", "uv": [ 0, 0, 16, 16 ] },
+                "south": { "texture": "#enlightened_ore", "uv": [ 0, 0, 16, 16 ] },
+                "west": { "texture": "#enlightened_ore", "uv": [ 0, 0, 16, 16 ] },
+                "up": { "texture": "#enlightened_ore", "uv": [ 0, 0, 16, 16 ] },
+                "down": { "texture": "#enlightened_ore", "uv": [ 0, 0, 16, 16 ] }
             }
         }
     ]

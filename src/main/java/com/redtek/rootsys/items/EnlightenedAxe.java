@@ -1,8 +1,7 @@
 package com.redtek.rootsys.items;
 
 import com.redtek.rootsys.ItemEvents;
-import com.redtek.rootsys.init.ModItemGroups;
-import com.redtek.rootsys.init.Tiers;
+import com.redtek.rootsys.init.ModItemGroup;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -19,12 +18,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
-public class TestAxe extends AxeItem {
+public class EnlightenedAxe extends AxeItem {
 
-  public TestAxe() {
-    super(Tiers.TEST, (int) Tiers.TEST.getAttackDamage(), 0, new Properties().group(ModItemGroups.MOD_ITEM_GROUP)
+  public EnlightenedAxe() {
+    super(ModTier.TEST, (int) ModTier.TEST.getAttackDamage(), 0, new Properties().group(ModItemGroup.MOD_ITEM_GROUP)
         .maxStackSize(1)
     );
   }

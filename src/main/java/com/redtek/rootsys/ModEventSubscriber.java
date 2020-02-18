@@ -1,17 +1,12 @@
 package com.redtek.rootsys;
 
-import com.redtek.rootsys.capabilities.Factory;
-import com.redtek.rootsys.capabilities.mode.IMode;
-import com.redtek.rootsys.capabilities.mode.ToolMode;
-import com.redtek.rootsys.capabilities.mode.ModeStorage;
 import com.redtek.rootsys.init.ModBlocks;
-import com.redtek.rootsys.init.ModItemGroups;
+import com.redtek.rootsys.init.ModItemGroup;
 import com.redtek.rootsys.init.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +20,7 @@ public class ModEventSubscriber {
   public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
 
     final Block[] blocks = {
-        ModBlocks.TEST_ORE
+        ModBlocks.ENLIGHTENED_ORE
     };
 
     event.getRegistry().registerAll(blocks);
@@ -37,15 +32,17 @@ public class ModEventSubscriber {
   @SubscribeEvent
   public static void onRegisterItems(RegistryEvent.Register<Item> event) {
 
-    CapabilityManager.INSTANCE.register(IMode.class, new ModeStorage(), new Factory());
-
     final Item[] items = {
-        ModItems.TEST_PICKAXE,
-        ModItems.TEST_AXE
+        ModItems.ENLIGHTENED_PICKAXE,
+        ModItems.ENLIGHTENED_AXE,
+        ModItems.ENLIGHTENED_HELMET,
+        ModItems.ENLIGHTENED_CHESTPLATE,
+        ModItems.ENLIGHTENED_LEGGINGS,
+        ModItems.ENLIGHTENED_BOOTS
     };
 
     final Item[] itemblocks = {
-        new BlockItem(ModBlocks.TEST_ORE, new Item.Properties().group(ModItemGroups.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "test_ore")
+        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "test_ore")
     };
 
     event.getRegistry().registerAll(items);
