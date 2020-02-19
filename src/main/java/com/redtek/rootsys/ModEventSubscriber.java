@@ -42,7 +42,7 @@ public class ModEventSubscriber {
     };
 
     final Item[] itemblocks = {
-        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "test_ore")
+        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_ore")
     };
 
     event.getRegistry().registerAll(items);

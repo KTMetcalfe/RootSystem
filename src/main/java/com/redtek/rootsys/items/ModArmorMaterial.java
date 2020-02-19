@@ -3,7 +3,6 @@ package com.redtek.rootsys.items;
 import com.redtek.rootsys.init.ModBlocks;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
@@ -13,6 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("SameParameterValue")
 public enum ModArmorMaterial implements IArmorMaterial {
 
   ENLIGHTENED("enlightened", 60, new int[]{3, 6, 8, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 5.0F, () -> {
@@ -28,7 +28,7 @@ public enum ModArmorMaterial implements IArmorMaterial {
   private final float toughness;
   private final LazyValue<Ingredient> repairMaterial;
 
-  private ModArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn, int enchantabilityIn, SoundEvent equipSoundIn, float toughnessIn, Supplier<Ingredient> repairMaterialSupplier) {
+  ModArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn, int enchantabilityIn, SoundEvent equipSoundIn, float toughnessIn, Supplier<Ingredient> repairMaterialSupplier) {
     this.name = nameIn;
     this.maxDamageFactor = maxDamageFactorIn;
     this.damageReductionAmountArray = damageReductionAmountsIn;

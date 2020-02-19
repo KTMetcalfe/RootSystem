@@ -1,7 +1,8 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "textures": {
-        "test_ore": "rootsys:blocks/enlightened_ore"
+        "enlightened_ore": "rootsys:blocks/enlightened_ore",
+        "particle": "rootsys:blocks/enlightened_ore"
     },
     "elements": [
         {

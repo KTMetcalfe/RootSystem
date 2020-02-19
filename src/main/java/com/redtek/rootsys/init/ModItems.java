@@ -5,7 +5,6 @@ import com.redtek.rootsys.items.EnlightenedArmor;
 import com.redtek.rootsys.items.EnlightenedAxe;
 import com.redtek.rootsys.items.EnlightenedPickaxe;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 

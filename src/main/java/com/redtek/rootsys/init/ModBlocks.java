@@ -8,5 +8,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(RootSystem.MODID)
 public class ModBlocks {
 
-  public static final Block ENLIGHTENED_ORE = new EnlightenedOre().setRegistryName(RootSystem.MODID,"test_ore");
+  public static final Block ENLIGHTENED_ORE = new EnlightenedOre().setRegistryName(RootSystem.MODID,"enlightened_ore");
 }

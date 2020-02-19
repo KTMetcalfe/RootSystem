@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rootsys:test_ore"
+          "name": "rootsys:enlightened_ore"
         }
       ],
       "conditions": [

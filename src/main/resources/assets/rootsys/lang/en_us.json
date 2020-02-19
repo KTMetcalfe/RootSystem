@@ -1,8 +1,13 @@
 {
   "itemGroup.rootsys": "Root System",
 
-  "item.rootsys.test_pickaxe": "Test Pickaxe",
-  "item.rootsys.test_axe": "Test Axe",
+  "item.rootsys.enlightened_pickaxe": "Enlightened Pickaxe",
+  "item.rootsys.enlightened_axe": "Enlightened Axe",
 
-  "block.rootsys.test_ore": "Test ore"
+  "block.rootsys.enlightened_ore": "Enlightened Ore",
+
+  "item.rootsys.enlightened_helmet": "Enlightened Helmet",
+  "item.rootsys.enlightened_chestplate": "Enlightened Chestplate",
+  "item.rootsys.enlightened_leggings": "Enlightened Leggings",
+  "item.rootsys.enlightened_boots": "Enlightened Boots"
 }

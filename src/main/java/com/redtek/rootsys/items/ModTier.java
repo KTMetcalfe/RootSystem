@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 // This results in an incorrect value shown ingame for the item's attack damage
 
 
+@SuppressWarnings("SameParameterValue")
 public enum ModTier implements IItemTier {
 
   TEST(3, 1561, 10.0F, 3.0F, 15, () -> {
