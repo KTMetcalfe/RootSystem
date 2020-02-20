@@ -1,7 +1,8 @@
-package com.redtek.rootsys.items;
+package com.redtek.rootsys.items.enlightened;
 
-import com.redtek.rootsys.ItemEvents;
 import com.redtek.rootsys.init.ModItemGroup;
+import com.redtek.rootsys.items.ItemEvents;
+import com.redtek.rootsys.items.ModTier;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;

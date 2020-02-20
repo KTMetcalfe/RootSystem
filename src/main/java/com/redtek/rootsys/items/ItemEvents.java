@@ -1,4 +1,4 @@
-package com.redtek.rootsys;
+package com.redtek.rootsys.items;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -61,13 +61,16 @@ public class ItemEvents {
           break;
       }
 
-      if (stackIn.canHarvestBlock(worldIn.getBlockState(posIn)) && stackIn.canHarvestBlock(worldIn.getBlockState(posTemp)) && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
+      if (stackIn.canHarvestBlock(worldIn.getBlockState(posIn))
+          && stackIn.canHarvestBlock(worldIn.getBlockState(posTemp))
+          && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
+
 //        worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
         worldIn.destroyBlock(posTemp, true);
+
 //        stackIn.damageItem(1, entityLivingIn, entity -> {
 //          entityLivingIn.sendBreakAnimation(entity.getActiveHand());
-//        }
-//        );
+//        });
         stackIn.setDamage(stackIn.getDamage()+1);
       }
     }

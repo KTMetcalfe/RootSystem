@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -20,13 +21,13 @@ public class ModEventSubscriber {
   public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
 
     final Block[] blocks = {
-        ModBlocks.ENLIGHTENED_ORE
+        ModBlocks.ENLIGHTENED_ORE,
+        ModBlocks.ENLIGHTENED_CHEST
     };
 
     event.getRegistry().registerAll(blocks);
 
     RootSystem.LOGGER.debug("All registered blocks: " + ForgeRegistries.BLOCKS.getEntries());
-
   }
 
   @SubscribeEvent
@@ -38,11 +39,13 @@ public class ModEventSubscriber {
         ModItems.ENLIGHTENED_HELMET,
         ModItems.ENLIGHTENED_CHESTPLATE,
         ModItems.ENLIGHTENED_LEGGINGS,
-        ModItems.ENLIGHTENED_BOOTS
+        ModItems.ENLIGHTENED_BOOTS,
+        ModItems.ENLIGHTENED_SHARD
     };
 
     final Item[] itemblocks = {
-        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_ore")
+        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_ore"),
+        new BlockItem(ModBlocks.ENLIGHTENED_CHEST, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_chest")
     };
 
     event.getRegistry().registerAll(items);
@@ -50,6 +53,7 @@ public class ModEventSubscriber {
 
     RootSystem.LOGGER.debug("All registered items: " + ForgeRegistries.ITEMS.getEntries());
   }
+
 
   public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
     return setup(entry, new ResourceLocation(RootSystem.MODID, name));
