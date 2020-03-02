@@ -1,9 +1,10 @@
 package com.redtek.rootsys.init;
 
 import com.redtek.rootsys.RootSystem;
-import com.redtek.rootsys.items.EnlightenedArmor;
-import com.redtek.rootsys.items.EnlightenedAxe;
-import com.redtek.rootsys.items.EnlightenedPickaxe;
+import com.redtek.rootsys.items.enlightened.EnlightenedArmor;
+import com.redtek.rootsys.items.enlightened.EnlightenedAxe;
+import com.redtek.rootsys.items.enlightened.EnlightenedPickaxe;
+import com.redtek.rootsys.items.enlightened.EnlightenedShard;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
@@ -38,4 +39,6 @@ public class ModItems {
   public static final Item ENLIGHTENED_CHESTPLATE = new EnlightenedArmor(EquipmentSlotType.CHEST).setRegistryName(RootSystem.MODID, "enlightened_chestplate");
   public static final Item ENLIGHTENED_LEGGINGS = new EnlightenedArmor(EquipmentSlotType.LEGS).setRegistryName(RootSystem.MODID, "enlightened_leggings");
   public static final Item ENLIGHTENED_BOOTS = new EnlightenedArmor(EquipmentSlotType.FEET).setRegistryName(RootSystem.MODID, "enlightened_boots");
+
+  public static final Item ENLIGHTENED_SHARD = new EnlightenedShard().setRegistryName(RootSystem.MODID, "enlightened_shard");
 }

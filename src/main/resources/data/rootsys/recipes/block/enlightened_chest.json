@@ -1,0 +1,20 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+  "##",
+  "##"
+],
+  "key": {
+    "#": {
+      "item": "rootsys:enlightened_shard"
+    }
+  },
+  "ingredients": [
+    {
+      "item": "rootsys:enlightened_shard"
+    }
+  ],
+  "result": {
+    "item": "rootsys:enlightened_chest"
+  }
+}

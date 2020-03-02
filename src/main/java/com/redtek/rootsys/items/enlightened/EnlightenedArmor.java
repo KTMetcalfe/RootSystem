@@ -1,6 +1,7 @@
-package com.redtek.rootsys.items;
+package com.redtek.rootsys.items.enlightened;
 
 import com.redtek.rootsys.init.ModItemGroup;
+import com.redtek.rootsys.items.ModArmorMaterial;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;

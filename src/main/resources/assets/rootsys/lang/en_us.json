@@ -4,7 +4,10 @@
   "item.rootsys.enlightened_pickaxe": "Enlightened Pickaxe",
   "item.rootsys.enlightened_axe": "Enlightened Axe",
 
+  "item.rootsys.enlightened_shard": "Enlightened Shard",
+
   "block.rootsys.enlightened_ore": "Enlightened Ore",
+  "block.rootsys.enlightened_chest": "Enlightened Chest",
 
   "item.rootsys.enlightened_helmet": "Enlightened Helmet",
   "item.rootsys.enlightened_chestplate": "Enlightened Chestplate",

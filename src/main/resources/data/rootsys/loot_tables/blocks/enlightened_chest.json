@@ -6,11 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rootsys:enlightened_shard",
-          "count": {
-            "min": 1.0,
-            "max": 3.0
-          }
+          "name": "rootsys:enlightened_chest"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }
