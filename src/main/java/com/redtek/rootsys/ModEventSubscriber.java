@@ -3,6 +3,7 @@ package com.redtek.rootsys;
 import com.redtek.rootsys.init.ModBlocks;
 import com.redtek.rootsys.init.ModItemGroup;
 import com.redtek.rootsys.init.ModItems;
+import com.redtek.rootsys.world.OreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -10,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -49,6 +51,11 @@ public class ModEventSubscriber {
     event.getRegistry().registerAll(itemblocks);
 
     RootSystem.LOGGER.debug("All registered items: " + ForgeRegistries.ITEMS.getEntries());
+  }
+
+  @SubscribeEvent
+  public static void loadCompleteEvent(FMLLoadCompleteEvent event) {
+    OreGeneration.setupOreGeneration();
   }
 
   public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
