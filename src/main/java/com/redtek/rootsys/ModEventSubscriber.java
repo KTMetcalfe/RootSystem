@@ -22,7 +22,8 @@ public class ModEventSubscriber {
   public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
 
     final Block[] blocks = {
-        ModBlocks.ENLIGHTENED_ORE
+        ModBlocks.ENLIGHTENED_ORE,
+        ModBlocks.ENLIGHTENED_CHEST
     };
 
     event.getRegistry().registerAll(blocks);
@@ -40,11 +41,13 @@ public class ModEventSubscriber {
         ModItems.ENLIGHTENED_HELMET,
         ModItems.ENLIGHTENED_CHESTPLATE,
         ModItems.ENLIGHTENED_LEGGINGS,
-        ModItems.ENLIGHTENED_BOOTS
+        ModItems.ENLIGHTENED_BOOTS,
+        ModItems.ENLIGHTENED_SHARD
     };
 
     final Item[] itemblocks = {
-        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_ore")
+        new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_ore"),
+        new BlockItem(ModBlocks.ENLIGHTENED_CHEST, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_chest")
     };
 
     event.getRegistry().registerAll(items);
