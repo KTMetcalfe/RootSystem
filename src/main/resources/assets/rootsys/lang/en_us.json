@@ -1,6 +1,9 @@
 {
   "itemGroup.rootsys": "Root System",
 
+  "key.vein": "Vein Mine",
+  "key.categories.rootsys": "Root System",
+
   "item.rootsys.enlightened_pickaxe": "Enlightened Pickaxe",
   "item.rootsys.enlightened_axe": "Enlightened Axe",
 

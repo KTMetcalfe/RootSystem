@@ -91,7 +91,7 @@ public class ItemEvents {
 
     for (int i = 0; i < 26; i++) {
 
-      //if (blocksDestroyed < maxBlocksIn) {
+      if (blocksDestroyed < maxBlocksIn) {
 
         switch (i) {
           case 0:
@@ -202,27 +202,28 @@ public class ItemEvents {
             break;
         }
 
-        if (posTemp.distanceSq(posOg) < maxBlocksIn) {
+
+        //TODO Make this destroy area from og block not a random direction
+        if (worldIn.getBlockState(posTemp).getBlock() == stateIn.getBlock()) {
 
 //          worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
-          //worldIn.destroyBlock(posTemp, true);
+          worldIn.destroyBlock(posTemp, true);
 
 //          stackIn.damageItem(1, entityLivingIn, entity -> {
 //                entityLivingIn.sendBreakAnimation(entity.getActiveHand());
 //              });
-          //stackIn.setDamage(stackIn.getDamage()+1);
+          stackIn.setDamage(stackIn.getDamage()+1);
 
-          //blocksDestroyed++;
+          blocksDestroyed++;
 
-          entityLivingIn.sendMessage(new TranslationTextComponent(Double.toString(posTemp.distanceSq(posOg))));
-
-          //posList.add(posTemp);
+          posList.add(posTemp);
         }
-      //}
+      }
     }
 
     for (BlockPos breakPos:posList) {
       veinMode(stackIn, worldIn, stateIn, breakPos, entityLivingIn, maxBlocksIn, posOg);
+//      entityLivingIn.sendMessage(new TranslationTextComponent(posList.toString()));
     }
   }
 }

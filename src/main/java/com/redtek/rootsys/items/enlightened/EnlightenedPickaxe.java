@@ -1,5 +1,6 @@
 package com.redtek.rootsys.items.enlightened;
 
+import com.redtek.rootsys.init.Keybinds;
 import com.redtek.rootsys.init.ModItemGroup;
 import com.redtek.rootsys.items.ItemEvents;
 import com.redtek.rootsys.items.ModTier;
@@ -61,6 +62,8 @@ public class EnlightenedPickaxe extends PickaxeItem {
       playerIn.sendStatusMessage(new TranslationTextComponent("Mode: " + nbt.getString("Mode")), true);
 
       stack.setTag(nbt);
+
+//      playerIn.sendMessage(new TranslationTextComponent(Integer.toString(Keybinds.vein.getKey().getKeyCode())));
     }
 
     return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -78,12 +81,13 @@ public class EnlightenedPickaxe extends PickaxeItem {
           ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
           break;
         case "Vein":
-          //if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
+          //worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")
+          if (Keybinds.vein.isKeyDown()) {
             stack.setDamage(stack.getDamage() - 1);
-            ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 8, pos);
+            ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32, pos);
             ItemEvents.blocksDestroyed = 0;
             break;
-          //}
+          }
       }
     }
 

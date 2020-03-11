@@ -1,5 +1,6 @@
 package com.redtek.rootsys;
 
+import com.redtek.rootsys.init.Keybinds;
 import com.redtek.rootsys.init.ModBlocks;
 import com.redtek.rootsys.init.ModItemGroup;
 import com.redtek.rootsys.init.ModItems;
@@ -58,6 +59,7 @@ public class ModEventSubscriber {
 
   @SubscribeEvent
   public static void loadCompleteEvent(FMLLoadCompleteEvent event) {
+    Keybinds.register();
     OreGeneration.setupOreGeneration();
   }
 
