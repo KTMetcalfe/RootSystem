@@ -3,9 +3,9 @@
 
   "pattern":
   [
-    "XXX",
-    "X X",
-    "XXX"
+    "XX",
+    "XO",
+    " O"
   ],
 
   "key":
@@ -13,11 +13,15 @@
     "X":
     {
       "item": "rootsys:enlightened_shard"
+    },
+    "O":
+    {
+      "item": "minecraft:stick"
     }
   },
 
   "result":
   {
-    "item": "rootsys:enlightened_chest"
+    "item": "rootsys:enlightened_axe"
   }
 }

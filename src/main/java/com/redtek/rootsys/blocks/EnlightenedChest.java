@@ -1,10 +1,10 @@
 package com.redtek.rootsys.blocks;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
-public class EnlightenedChest extends Block {
+public class EnlightenedChest extends HorizontalBlock {
 
   public EnlightenedChest() {
     super(

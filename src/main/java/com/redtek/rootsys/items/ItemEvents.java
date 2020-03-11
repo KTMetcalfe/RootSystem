@@ -4,8 +4,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -76,9 +78,12 @@ public class ItemEvents {
     }
   }
 
+
+  // This mode will mine all similar connected blocks up to 32 destroyed
+
   public static int blocksDestroyed = 0;
 
-  public static void veinMode(ItemStack stackIn, World worldIn, BlockState stateIn, BlockPos posIn, LivingEntity entityLivingIn, int maxBlocksIn) {
+  public static void veinMode(ItemStack stackIn, World worldIn, BlockState stateIn, BlockPos posIn, LivingEntity entityLivingIn, double maxBlocksIn, BlockPos posOg) {
 
     BlockPos posTemp = posIn;
 
@@ -86,7 +91,7 @@ public class ItemEvents {
 
     for (int i = 0; i < 26; i++) {
 
-      if (blocksDestroyed < maxBlocksIn) {
+      //if (blocksDestroyed < maxBlocksIn) {
 
         switch (i) {
           case 0:
@@ -197,25 +202,27 @@ public class ItemEvents {
             break;
         }
 
-        if (worldIn.getBlockState(posTemp).getBlock() == stateIn.getBlock()) {
+        if (posTemp.distanceSq(posOg) < maxBlocksIn) {
 
 //          worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
-          worldIn.destroyBlock(posTemp, true);
+          //worldIn.destroyBlock(posTemp, true);
 
 //          stackIn.damageItem(1, entityLivingIn, entity -> {
 //                entityLivingIn.sendBreakAnimation(entity.getActiveHand());
 //              });
-          stackIn.setDamage(stackIn.getDamage()+1);
+          //stackIn.setDamage(stackIn.getDamage()+1);
 
-          blocksDestroyed++;
+          //blocksDestroyed++;
 
-          posList.add(posTemp);
+          entityLivingIn.sendMessage(new TranslationTextComponent(Double.toString(posTemp.distanceSq(posOg))));
+
+          //posList.add(posTemp);
         }
-      }
+      //}
     }
 
     for (BlockPos breakPos:posList) {
-      veinMode(stackIn, worldIn, stateIn, breakPos, entityLivingIn, maxBlocksIn);
+      veinMode(stackIn, worldIn, stateIn, breakPos, entityLivingIn, maxBlocksIn, posOg);
     }
   }
 }

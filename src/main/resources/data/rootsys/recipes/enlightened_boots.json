@@ -3,9 +3,8 @@
 
   "pattern":
   [
-    "XXX",
-    "X X",
-    "XXX"
+   "X X",
+   "X X"
   ],
 
   "key":
@@ -18,6 +17,6 @@
 
   "result":
   {
-    "item": "rootsys:enlightened_chest"
+    "item": "rootsys:enlightened_boots"
   }
 }

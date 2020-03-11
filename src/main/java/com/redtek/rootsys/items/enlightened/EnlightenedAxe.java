@@ -69,7 +69,7 @@ public class EnlightenedAxe extends AxeItem {
 
       if (nbt.getString("Mode").equals("Vein") && worldIn.getBlockState(pos).getBlock().getRegistryName().toString().contains("log")) {
         stack.setDamage(stack.getDamage() - 1);
-        ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
+        ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 8, pos);
         ItemEvents.blocksDestroyed = 0;
       }
     }

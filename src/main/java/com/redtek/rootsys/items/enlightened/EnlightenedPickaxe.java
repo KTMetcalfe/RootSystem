@@ -78,12 +78,12 @@ public class EnlightenedPickaxe extends PickaxeItem {
           ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
           break;
         case "Vein":
-          if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
+          //if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
             stack.setDamage(stack.getDamage() - 1);
-            ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32);
+            ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 8, pos);
             ItemEvents.blocksDestroyed = 0;
             break;
-          }
+          //}
       }
     }
 
