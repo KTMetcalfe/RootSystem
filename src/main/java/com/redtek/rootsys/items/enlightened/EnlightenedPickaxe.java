@@ -1,6 +1,5 @@
 package com.redtek.rootsys.items.enlightened;
 
-import com.redtek.rootsys.init.Keybinds;
 import com.redtek.rootsys.init.ModItemGroup;
 import com.redtek.rootsys.items.ItemEvents;
 import com.redtek.rootsys.items.ModTier;
@@ -81,8 +80,7 @@ public class EnlightenedPickaxe extends PickaxeItem {
           ItemEvents.hammerMode(stack, worldIn, state, pos, entityLiving);
           break;
         case "Vein":
-          //worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")
-          if (Keybinds.vein.isKeyDown()) {
+          if (worldIn.getBlockState(pos).getBlock().getRegistryName().toString().toLowerCase().endsWith("ore")) {
             stack.setDamage(stack.getDamage() - 1);
             ItemEvents.veinMode(stack, worldIn, state, pos, entityLiving, 32, pos);
             ItemEvents.blocksDestroyed = 0;

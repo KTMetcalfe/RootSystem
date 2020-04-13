@@ -1,14 +1,20 @@
 package com.redtek.rootsys.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +24,8 @@ public class ItemEvents {
   public static void hammerMode(ItemStack stackIn, World worldIn, BlockState stateIn, BlockPos posIn, LivingEntity entityLivingIn) {
 
     BlockPos posTemp = posIn;
+
+    Block blockDrop;
 
     Direction up = Direction.UP;
     Direction down = Direction.DOWN;
@@ -67,8 +75,10 @@ public class ItemEvents {
           && stackIn.canHarvestBlock(worldIn.getBlockState(posTemp))
           && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
 
-//        worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
+//        blockDrop = worldIn.getBlockState(posTemp).getBlock();
         worldIn.destroyBlock(posTemp, true);
+
+//        worldIn.addEntity(new ItemEntity(worldIn, posTemp.getX(), posTemp.getY(), posTemp.getZ(), new ItemStack(blockDrop)));
 
 //        stackIn.damageItem(1, entityLivingIn, entity -> {
 //          entityLivingIn.sendBreakAnimation(entity.getActiveHand());
@@ -77,7 +87,6 @@ public class ItemEvents {
       }
     }
   }
-
 
   // This mode will mine all similar connected blocks up to 32 destroyed
 
