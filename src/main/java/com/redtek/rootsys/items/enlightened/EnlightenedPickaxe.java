@@ -88,6 +88,7 @@ public class EnlightenedPickaxe extends PickaxeItem {
             ItemEvents.blocksDestroyed = 0;
             break;
           }
+          else {break;}
       }
     }
 
