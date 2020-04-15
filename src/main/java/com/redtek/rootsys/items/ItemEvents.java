@@ -3,10 +3,13 @@ package com.redtek.rootsys.items;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -16,10 +19,25 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemEvents {
+
+  public static boolean destroyBlock(World world, BlockPos posIn, boolean dropBlock, @Nullable Entity entityIn, ItemStack stackIn) {
+    BlockState state = world.getBlockState(posIn);
+    if(state.isAir(world, posIn)) return false;
+    else {
+      IFluidState ifluidstate = world.getFluidState(posIn);
+      world.playEvent(2001, posIn, Block.getStateId(state));
+      if(dropBlock) {
+        TileEntity tileentity = state.hasTileEntity() ? world.getTileEntity(posIn) : null;
+        Block.spawnDrops(state, world, posIn, tileentity, entityIn, stackIn);
+      }
+      return world.setBlockState(posIn, ifluidstate.getBlockState(), 3);
+    }
+  }
 
   public static void hammerMode(ItemStack stackIn, World worldIn, BlockState stateIn, BlockPos posIn, LivingEntity entityLivingIn) {
 
@@ -73,8 +91,7 @@ public class ItemEvents {
           && stackIn.canHarvestBlock(worldIn.getBlockState(posTemp))
           && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
 
-        if(worldIn.destroyBlock(posTemp, false)) {
-          Block.spawnDrops(stateIn, worldIn, posTemp, null, entityLivingIn, stackIn);
+        if(destroyBlock(worldIn, posTemp, true, entityLivingIn, stackIn)) {
           stackIn.setDamage(stackIn.getDamage() + 1);
         }
       }
@@ -208,8 +225,7 @@ public class ItemEvents {
         //TODO Make this destroy area from og block not a random direction -- queue system??
         if (worldIn.getBlockState(posTemp).getBlock() == stateIn.getBlock()) {
 
-          if(worldIn.destroyBlock(posTemp, false)) {
-            Block.spawnDrops(stateIn, worldIn, posTemp, null, entityLivingIn, stackIn);
+          if(destroyBlock(worldIn, posTemp, true, entityLivingIn, stackIn)) {
             stackIn.setDamage(stackIn.getDamage() + 1);
           }
 

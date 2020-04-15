@@ -14,9 +14,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class OreGeneration {
   public static void setupOreGeneration() {
     for (Biome biome : ForgeRegistries.BIOMES) {
-      ConfiguredPlacement customConfig = Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(5, 5, 5, 25));
+      ConfiguredPlacement customConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(5, 5, 5, 25));
 
-      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.func_225566_b_(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ENLIGHTENED_ORE.getDefaultState(), 5)).func_227228_a_(customConfig));
+      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ENLIGHTENED_ORE.getDefaultState(), 5)).withPlacement(customConfig));
     }
   }
 }
