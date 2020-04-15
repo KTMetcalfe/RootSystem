@@ -25,8 +25,6 @@ public class ItemEvents {
 
     BlockPos posTemp = posIn;
 
-    Block blockDrop;
-
     Direction up = Direction.UP;
     Direction down = Direction.DOWN;
 
@@ -75,15 +73,10 @@ public class ItemEvents {
           && stackIn.canHarvestBlock(worldIn.getBlockState(posTemp))
           && worldIn.getBlockState(posTemp).getBlock() != Blocks.AIR) {
 
-//        blockDrop = worldIn.getBlockState(posTemp).getBlock();
-        worldIn.destroyBlock(posTemp, true);
-
-//        worldIn.addEntity(new ItemEntity(worldIn, posTemp.getX(), posTemp.getY(), posTemp.getZ(), new ItemStack(blockDrop)));
-
-//        stackIn.damageItem(1, entityLivingIn, entity -> {
-//          entityLivingIn.sendBreakAnimation(entity.getActiveHand());
-//        });
-        stackIn.setDamage(stackIn.getDamage()+1);
+        if(worldIn.destroyBlock(posTemp, false)) {
+          Block.spawnDrops(stateIn, worldIn, posTemp, null, entityLivingIn, stackIn);
+          stackIn.setDamage(stackIn.getDamage() + 1);
+        }
       }
     }
   }
@@ -212,16 +205,13 @@ public class ItemEvents {
         }
 
 
-        //TODO Make this destroy area from og block not a random direction
+        //TODO Make this destroy area from og block not a random direction -- queue system??
         if (worldIn.getBlockState(posTemp).getBlock() == stateIn.getBlock()) {
 
-//          worldIn.addEntity(new ItemEntity(worldIn, entityLivingIn.prevPosX, entityLivingIn.prevPosY, entityLivingIn.prevPosZ, new ItemStack(worldIn.getBlockState(posTemp).getBlock())));
-          worldIn.destroyBlock(posTemp, true);
-
-//          stackIn.damageItem(1, entityLivingIn, entity -> {
-//                entityLivingIn.sendBreakAnimation(entity.getActiveHand());
-//              });
-          stackIn.setDamage(stackIn.getDamage()+1);
+          if(worldIn.destroyBlock(posTemp, false)) {
+            Block.spawnDrops(stateIn, worldIn, posTemp, null, entityLivingIn, stackIn);
+            stackIn.setDamage(stackIn.getDamage() + 1);
+          }
 
           blocksDestroyed++;
 
