@@ -1,9 +1,12 @@
 package com.redtek.rootsys.tileentity;
 
+import com.redtek.rootsys.blocks.MarkerBlock;
+import com.redtek.rootsys.blocks.MinerBlock;
 import com.redtek.rootsys.init.ModTileEntityTypes;
 import com.redtek.rootsys.util.helpers.NBTHelper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -11,7 +14,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.extensions.IForgeBlockState;
@@ -20,7 +25,7 @@ import javax.annotation.Nullable;
 
 public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
 
-  public int x, y, z, tick;
+  public int x, y, z, tick, xMax, yMax;
   boolean initialized = false;
 
   public MinerTileEntity(final TileEntityType<?> tileEntityTypeIn) {
@@ -42,6 +47,7 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
   }
 
   private void init() {
+    checkForMarkers(world, pos);
     initialized = true;
     x = this.pos.getX() - 1;
     y = this.pos.getY() - 1;
@@ -50,14 +56,10 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
   }
 
   private void execute() {
-    int index = 0;
-    Block[] blocksRemoved = new Block[9];
-    for (int x = 0; x < 3; x++) {
-      for (int z = 0; z < 3; z++) {
-        BlockPos posBreak = new BlockPos(this.x + x, this.y, this.z + z);
-        blocksRemoved[index] = this.world.getBlockState(posBreak).getBlock();
+    for (int x = startX; x < endX; x++) {
+      for (int z = startZ; z < endZ; z++) {
+        BlockPos posBreak = new BlockPos(x, this.y, z);
         destroyBlock(posBreak, true, null);
-        index++;
       }
     }
     this.y--;
@@ -96,5 +98,40 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
       return;
     }
     init();
+  }
+
+  int maxX = 32;
+  int maxZ = 32;
+  int startX, startZ, endX, endZ;
+
+  private void checkForMarkers(World world, BlockPos posMiner) {
+    startX = 0;
+    startZ = 0;
+    endX = 0;
+    endZ = 0;
+    for(int side = 0; side < 4; side++) {
+      Direction direction = Direction.fromAngle(side * 90);
+      BlockPos posCheck = posMiner.offset(direction);
+      if(world.getBlockState(posCheck).getBlock() instanceof MarkerBlock) {
+        for (int x = -maxX; x <= maxX; x++) {
+          BlockPos findX = posCheck.add(x, 0, 0);
+          for (int z = -maxZ; z <= maxZ; z++) {
+            BlockPos findZ = posCheck.add(0, 0, z);
+            if(world.getBlockState(findZ).getBlock() instanceof MarkerBlock && findZ != posCheck) {
+              startZ = Math.min(posCheck.getZ(), findZ.getZ());
+              endZ = Math.max(posCheck.getZ(), findZ.getZ());
+              break;
+            }
+          }
+          if(world.getBlockState(findX).getBlock() instanceof MarkerBlock && findX != posCheck) {
+            startX = Math.min(posCheck.getX(), findX.getX());
+            endX = Math.max(posCheck.getX(), findX.getX());
+            break;
+          }
+        }
+
+        break;
+      }
+    }
   }
 }
