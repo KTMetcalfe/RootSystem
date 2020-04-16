@@ -19,10 +19,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EnlightenedChest extends Block {
 
-  public EnlightenedChest() {
-    super(
-        Properties.from(ModBlocks.ENLIGHTENED_ORE.get())
-    );
+  public EnlightenedChest(Properties properties) {
+    super(properties);
   }
 
   @Override
