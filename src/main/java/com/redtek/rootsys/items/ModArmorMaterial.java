@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public enum ModArmorMaterial implements IArmorMaterial {
 
   ENLIGHTENED("rootsys:enlightened", 60, new int[]{3, 6, 8, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 5.0F, () -> {
-    return Ingredient.fromItems(ModBlocks.ENLIGHTENED_ORE);
+    return Ingredient.fromItems(ModBlocks.ENLIGHTENED_ORE.get());
   });
 
   private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};

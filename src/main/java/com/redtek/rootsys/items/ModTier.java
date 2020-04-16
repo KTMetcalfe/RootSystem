@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public enum ModTier implements IItemTier {
 
   TEST(3, 1561, 10.0F, 3.0F, 15, () -> {
-    return Ingredient.fromItems(ModBlocks.ENLIGHTENED_ORE);
+    return Ingredient.fromItems(ModBlocks.ENLIGHTENED_ORE.get());
   });
 
   private final int harvestLevel;

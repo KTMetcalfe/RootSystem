@@ -1,9 +1,6 @@
 package com.redtek.rootsys;
 
-import com.redtek.rootsys.init.ModBlocks;
-import com.redtek.rootsys.init.ModItemGroup;
-import com.redtek.rootsys.init.ModItems;
-import com.redtek.rootsys.init.ModTileEntityTypes;
+import com.redtek.rootsys.init.*;
 import com.redtek.rootsys.world.OreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -14,6 +11,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -21,6 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +39,10 @@ public class RootSystem {
     modEventBus.addListener(this::setupCommon);
     modEventBus.addListener(this::setupClient);
 
+    ModItems.ITEMS.register(modEventBus);
+    ModBlocks.BLOCKS.register(modEventBus);
     ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+    ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
 
     instance = this;
     MinecraftForge.EVENT_BUS.register(this);
@@ -60,44 +62,29 @@ public class RootSystem {
   }
 
   @SubscribeEvent
-  public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
+  public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
+    final IForgeRegistry<Item> registry = event.getRegistry();
 
-    final Block[] blocks = {
-            ModBlocks.ENLIGHTENED_ORE,
-            ModBlocks.ENLIGHTENED_CHEST,
-            ModBlocks.MINERBLOCK
-    };
+    ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
+      final Item.Properties properties = new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP);
+      final BlockItem blockItem = new BlockItem(block, properties);
+      blockItem.setRegistryName(block.getRegistryName());
+      registry.register(blockItem);
+    });
 
-    event.getRegistry().registerAll(blocks);
-
-    RootSystem.LOGGER.debug("All registered blocks: " + ForgeRegistries.BLOCKS.getEntries());
-
+    LOGGER.debug("All registered items: " + registry.getEntries());
   }
 
-  @SubscribeEvent
-  public static void onRegisterItems(RegistryEvent.Register<Item> event) {
-
-    final Item[] items = {
-        ModItems.ENLIGHTENED_PICKAXE,
-        ModItems.ENLIGHTENED_AXE,
-        ModItems.ENLIGHTENED_HELMET,
-        ModItems.ENLIGHTENED_CHESTPLATE,
-        ModItems.ENLIGHTENED_LEGGINGS,
-        ModItems.ENLIGHTENED_BOOTS,
-        ModItems.ENLIGHTENED_SHARD
-    };
-
-    final Item[] itemblocks = {
-            new BlockItem(ModBlocks.ENLIGHTENED_ORE, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_ore"),
-            new BlockItem(ModBlocks.ENLIGHTENED_CHEST, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "enlightened_chest"),
-            new BlockItem(ModBlocks.MINERBLOCK, new Item.Properties().group(ModItemGroup.MOD_ITEM_GROUP)).setRegistryName(RootSystem.MODID, "minerblock")
-    };
-
-    event.getRegistry().registerAll(items);
-    event.getRegistry().registerAll(itemblocks);
-
-    RootSystem.LOGGER.debug("All registered items: " + ForgeRegistries.ITEMS.getEntries());
-  }
+//  @SubscribeEvent
+//  public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
+//    final IForgeRegistry<Block> registry = event.getRegistry();
+//
+//    ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
+//      registry.register(block);
+//    });
+//
+//    LOGGER.debug("All registered blocks: " + registry.getEntries());
+//  }
 
   @SubscribeEvent
   public static void loadCompleteEvent(FMLLoadCompleteEvent event) {
@@ -105,7 +92,7 @@ public class RootSystem {
   }
 
   public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
-    return setup(entry, new ResourceLocation(RootSystem.MODID, name));
+    return setup(entry, new ResourceLocation(MODID, name));
   }
 
   public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final ResourceLocation registryName) {

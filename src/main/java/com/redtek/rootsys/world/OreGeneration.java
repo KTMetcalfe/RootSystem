@@ -16,7 +16,7 @@ public class OreGeneration {
     for (Biome biome : ForgeRegistries.BIOMES) {
       ConfiguredPlacement customConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(5, 5, 5, 25));
 
-      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ENLIGHTENED_ORE.getDefaultState(), 5)).withPlacement(customConfig));
+      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ENLIGHTENED_ORE.get().getDefaultState(), 5)).withPlacement(customConfig));
     }
   }
 }

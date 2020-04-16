@@ -7,9 +7,11 @@ import com.redtek.rootsys.items.enlightened.EnlightenedPickaxe;
 import com.redtek.rootsys.items.enlightened.EnlightenedShard;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
-@ObjectHolder(RootSystem.MODID)
 public class ModItems {
 
   /* TODO
@@ -31,14 +33,16 @@ public class ModItems {
 
   */
 
-  public static final Item ENLIGHTENED_PICKAXE = new EnlightenedPickaxe().setRegistryName(RootSystem.MODID, "enlightened_pickaxe");
+  public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, RootSystem.MODID);
 
-  public static final Item ENLIGHTENED_AXE = new EnlightenedAxe().setRegistryName(RootSystem.MODID, "enlightened_axe");
 
-  public static final Item ENLIGHTENED_HELMET = new EnlightenedArmor(EquipmentSlotType.HEAD).setRegistryName(RootSystem.MODID, "enlightened_helmet");
-  public static final Item ENLIGHTENED_CHESTPLATE = new EnlightenedArmor(EquipmentSlotType.CHEST).setRegistryName(RootSystem.MODID, "enlightened_chestplate");
-  public static final Item ENLIGHTENED_LEGGINGS = new EnlightenedArmor(EquipmentSlotType.LEGS).setRegistryName(RootSystem.MODID, "enlightened_leggings");
-  public static final Item ENLIGHTENED_BOOTS = new EnlightenedArmor(EquipmentSlotType.FEET).setRegistryName(RootSystem.MODID, "enlightened_boots");
+  public static final RegistryObject<Item> ENLIGHTENED_PICKAXE = ITEMS.register("enlightened_pickaxe", () -> new EnlightenedPickaxe());
+  public static final RegistryObject<Item> ENLIGHTENED_AXE = ITEMS.register("enlightened_axe", () -> new EnlightenedAxe());
 
-  public static final Item ENLIGHTENED_SHARD = new EnlightenedShard().setRegistryName(RootSystem.MODID, "enlightened_shard");
+  public static final RegistryObject<Item> ENLIGHTENED_HELMET = ITEMS.register("enlightened_helmet", () -> new EnlightenedArmor(EquipmentSlotType.HEAD));
+  public static final RegistryObject<Item> ENLIGHTENED_CHESTPLATE = ITEMS.register("enlightened_chestplate", () -> new EnlightenedArmor(EquipmentSlotType.CHEST));
+  public static final RegistryObject<Item> ENLIGHTENED_LEGGINGS = ITEMS.register("enlightened_leggings", () -> new EnlightenedArmor(EquipmentSlotType.LEGS));
+  public static final RegistryObject<Item> ENLIGHTENED_BOOTS = ITEMS.register("enlightened_boots", () -> new EnlightenedArmor(EquipmentSlotType.FEET));
+
+  public static final RegistryObject<Item> ENLIGHTENED_SHARD = ITEMS.register("enlightened_shard", () -> new EnlightenedShard());
 }

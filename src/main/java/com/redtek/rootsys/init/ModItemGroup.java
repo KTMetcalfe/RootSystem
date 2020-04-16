@@ -20,5 +20,5 @@ public class ModItemGroup extends ItemGroup {
     return iconSupplier.get();
   }
 
-  public static final ItemGroup MOD_ITEM_GROUP = new ModItemGroup(RootSystem.MODID, () -> new ItemStack(ModBlocks.ENLIGHTENED_ORE));
+  public static final ItemGroup MOD_ITEM_GROUP = new ModItemGroup(RootSystem.MODID, () -> new ItemStack(ModBlocks.ENLIGHTENED_ORE.get()));
 }

@@ -2,19 +2,19 @@ package com.redtek.rootsys.tileentity;
 
 import com.redtek.rootsys.init.ModTileEntityTypes;
 import com.redtek.rootsys.util.helpers.NBTHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.tileentity.*;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.extensions.IForgeBlockState;
 
 import javax.annotation.Nullable;
 
@@ -37,7 +37,7 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
     tick++;
     if(tick == 40) {
       tick = 0;
-      if(y > 2) execute();
+      if(y > 4) execute();
     }
   }
 
@@ -71,7 +71,7 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
       world.playEvent(2001, posIn, Block.getStateId(state));
       if(dropBlock) {
         TileEntity tileentity = state.hasTileEntity() ? world.getTileEntity(posIn) : null;
-        Block.spawnDrops(state, world, this.pos.add(0, 1.5, 0), tileentity, entityIn, ItemStack.EMPTY);
+        Block.spawnDrops(state, world, this.pos.add(0.0d, 1.5d, 0.0d), tileentity, entityIn, ItemStack.EMPTY);
       }
       return world.setBlockState(posIn, ifluidstate.getBlockState(), 3);
     }
