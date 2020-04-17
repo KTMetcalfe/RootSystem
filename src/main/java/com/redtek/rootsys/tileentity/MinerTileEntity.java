@@ -7,10 +7,15 @@ import com.redtek.rootsys.util.helpers.NBTHelper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleType;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +24,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.extensions.IForgeBlockState;
+import net.minecraftforge.event.TickEvent;
 
 import javax.annotation.Nullable;
 
@@ -40,7 +47,14 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
   public void tick() {
     if(!initialized) init();
     tick++;
-    if(tick == 20) {
+    for (int height = 0; height < 10; height++) {
+      world.addParticle(ParticleTypes.TOTEM_OF_UNDYING, x+0.5, y+2+(height/10) , z+0.5, 0, 0, 0);
+    }
+    if (tick == 1) {
+      checkForMarkers(world, pos);
+      if(y > 4) findNextBreakable();
+    }
+    if(tick == 5) {
       tick = 0;
       if(y > 4) execute();
     }
@@ -53,23 +67,11 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
     y = this.pos.getY() - 1;
     z = startZ;
     tick = 0;
+    findNextBreakable();
   }
 
   private void execute() {
-    if(x <= endX) {
-      BlockPos posBreak = new BlockPos(x, y, z);
-      destroyBlock(posBreak, true, null);
-      x++;
-    } else if(x > endX) {
-      if (z < endZ) {
-        x = startX;
-        z++;
-      } else if(z >= endZ) {
-        x = startX;
-        z = startZ;
-        y--;
-      }
-    }
+      destroyBlock(new BlockPos(x, y, z), true, null);
   }
 
   public boolean destroyBlock(BlockPos posIn, boolean dropBlock, @Nullable Entity entityIn) {
@@ -112,10 +114,10 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
   int startX, startZ, endX, endZ;
 
   private void checkForMarkers(World world, BlockPos posMiner) {
-    startX = -1;
-    startZ = -1;
-    endX = 1;
-    endZ = 1;
+    startX = this.pos.getX() - 1;
+    startZ = this.pos.getZ() - 1;
+    endX = this.pos.getX() + 1;
+    endZ = this.pos.getZ() + 1;
     for(int side = 0; side < 4; side++) {
       Direction direction = Direction.fromAngle(side * 90);
       BlockPos posCheck = posMiner.offset(direction);
@@ -138,6 +140,30 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
         }
 
         break;
+      }
+    }
+  }
+
+  public void findNextBreakable() {
+    while(true) {
+      if (x <= endX) {
+        BlockPos posBlock = new BlockPos(x, y, z);
+        BlockState stateBlock = world.getBlockState(posBlock);
+        if (stateBlock.getBlock().isToolEffective(stateBlock, ToolType.PICKAXE)
+            || stateBlock.getBlock().isToolEffective(stateBlock, ToolType.AXE)
+            || stateBlock.getBlock().isToolEffective(stateBlock, ToolType.SHOVEL)) {
+          break;
+        }
+        x++;
+      } else if (x > endX) {
+        if (z < endZ) {
+          x = startX;
+          z++;
+        } else if (z >= endZ) {
+          x = startX;
+          z = startZ;
+          y--;
+        }
       }
     }
   }
