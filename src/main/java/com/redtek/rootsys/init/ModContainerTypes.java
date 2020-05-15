@@ -1,7 +1,6 @@
 package com.redtek.rootsys.init;
 
 import com.redtek.rootsys.RootSystem;
-import com.redtek.rootsys.blocks.EnlightenedChest;
 import com.redtek.rootsys.container.EnlightenedChestContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;

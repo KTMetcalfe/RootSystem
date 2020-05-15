@@ -1,32 +1,21 @@
 package com.redtek.rootsys.tileentity;
 
 import com.redtek.rootsys.blocks.MarkerBlock;
-import com.redtek.rootsys.blocks.MinerBlock;
 import com.redtek.rootsys.init.ModTileEntityTypes;
 import com.redtek.rootsys.util.helpers.NBTHelper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.extensions.IForgeBlockState;
-import net.minecraftforge.event.TickEvent;
 
 import javax.annotation.Nullable;
 
@@ -51,7 +40,6 @@ public class MinerTileEntity extends TileEntity implements ITickableTileEntity {
       world.addParticle(ParticleTypes.TOTEM_OF_UNDYING, x+0.5, y+2+(height/10) , z+0.5, 0, 0, 0);
     }
     if (tick == 1) {
-      checkForMarkers(world, pos);
       if(y > 4) findNextBreakable();
     }
     if(tick == 5) {

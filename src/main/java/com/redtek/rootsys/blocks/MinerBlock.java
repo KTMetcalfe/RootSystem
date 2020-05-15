@@ -1,12 +1,15 @@
 package com.redtek.rootsys.blocks;
 
 import com.redtek.rootsys.RootSystem;
+import com.redtek.rootsys.client.gui.MinerBlockScreen;
 import com.redtek.rootsys.init.ModTileEntityTypes;
 import com.redtek.rootsys.tileentity.EnlightenedChestTileEntity;
+import com.redtek.rootsys.tileentity.MinerTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -39,5 +42,17 @@ public class MinerBlock extends Block {
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return ModTileEntityTypes.MINERBLOCK.get().create();
+  }
+
+  @Override
+  public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    if(!worldIn.isRemote) {
+      TileEntity tile = worldIn.getTileEntity(pos);
+      if(tile instanceof MinerTileEntity) {
+        Minecraft.getInstance().displayGuiScreen(new MinerBlockScreen());
+        return ActionResultType.SUCCESS;
+      }
+    }
+    return ActionResultType.FAIL;
   }
 }
