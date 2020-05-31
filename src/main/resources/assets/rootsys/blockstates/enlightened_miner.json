@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "rootsys:block/enlightened_miner"
+        }
+    }
+}

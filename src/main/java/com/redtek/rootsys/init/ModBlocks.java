@@ -21,17 +21,20 @@ public class ModBlocks {
 
 
   public static final RegistryObject<Block> ENLIGHTENED_ORE = BLOCKS.register("enlightened_ore", () -> new EnlightenedOre(
-          Block.Properties.create(Material.IRON)
-                  .hardnessAndResistance(3.0F, 3.0F)
-                  .sound(SoundType.METAL)
+      Block.Properties.create(Material.IRON)
+          .hardnessAndResistance(3.0F, 3.0F)
+          .sound(SoundType.METAL)
   ));
   public static final RegistryObject<Block> ENLIGHTENED_CHEST = BLOCKS.register("enlightened_chest", () -> new EnlightenedChest(
-          Block.Properties.from(ModBlocks.ENLIGHTENED_ORE.get())
+      Block.Properties.from(ModBlocks.ENLIGHTENED_ORE.get())
   ));
-  public static final RegistryObject<Block> MINERBLOCK = BLOCKS.register("minerblock", () -> new MinerBlock(
-          Block.Properties.from(ModBlocks.ENLIGHTENED_ORE.get())
+  public static final RegistryObject<Block> MINERBLOCK = BLOCKS.register("enlightened_miner", () -> new MinerBlock(
+      Block.Properties.from(ModBlocks.ENLIGHTENED_ORE.get())
   ));
-  public static final RegistryObject<Block> MARKERBLOCK = BLOCKS.register("markerblock", () -> new MarkerBlock(
-          Block.Properties.from(ModBlocks.ENLIGHTENED_ORE.get())
+  public static final RegistryObject<Block> MARKERBLOCK = BLOCKS.register("enlightened_marker", () -> new MarkerBlock(
+      Block.Properties.create(Material.SHULKER)
+          .hardnessAndResistance(3.0F, 3.0F)
+          .sound(SoundType.WOOD)
+          .notSolid()
   ));
 }
